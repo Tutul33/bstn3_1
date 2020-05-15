@@ -1,0 +1,58 @@
+<div class="row">  
+    <div class="container">
+        <div class="col-md-12">
+            <div class="col-md-4" *ngIf="islogin">
+                
+                
+                    <div class="container panel">
+                        <div class="col-md-12" style="text-align: justify;" >
+                            <h3>User  Login</h3>
+                        </div>
+                        <div class="col-md-12" style="color: chocolate;" *ngIf="Message==''?false:true">
+                            {{Message}}
+                        </div>
+                        <div class="col-md-12">
+                          <label for="uname"><b>Username: </b></label>
+                        <input type="text" id="UserName" [(ngModel)]="username" placeholder="Enter Username" name="uname" required>
+                        </div> 
+                         <div  class="col-md-12"><label for="psw"><b>Password: </b></label>
+                          <input type="password" id="password" [(ngModel)]="password" placeholder="Enter Password" name="psw" required>
+                        </div>
+                        <div class="col-md-12"><button type="button" id="loginBtn" (click)="UserAuthentication()">Login</button>
+                        <button type="button" id="goToUserCreate" style="margin-left: 8px;" (click)="islogin=false">Create New User</button></div> 
+                      
+                    </div>
+                
+                    
+              
+            </div>
+            <div class="col-md-4" *ngIf="!islogin">
+                <!-- User Name:<input type="text" id="UserName" [(ngModel)]="username"><br/>
+                Password:<input type="text" id="password" [(ngModel)]="password"><br/>
+                <button type="button" id="loginBtn" (click)="UserCreate()">Submit</button><br/>
+                <button type="button" id="goToLogin" (click)="islogin=true">Back to login</button> -->
+                <div class="container panel">
+                      <div class="col-md-12" style="text-align: justify;" >
+                        <h3>User  Creation</h3>
+                    </div>
+                    <div class="col-md-12" style="color: chocolate;" *ngIf="Message==''?false:true">
+                        {{Message}}
+                    </div>
+                 <div class="col-md-12">
+                        <label for="uname"><b>Username: </b></label>
+                      <input type="text" id="UserName" [(ngModel)]="username" placeholder="Enter Username" name="uname" required>
+                  </div>
+                  <div  class="col-md-12"><label for="psw"><b>Password: </b></label>
+                        <input type="password" id="password" [(ngModel)]="password" placeholder="Enter Password" name="psw" required>
+                   </div>
+                   <div class="col-md-12">
+                       <button type="button" id="loginBtn" (click)="UserCreate()">Create</button>
+                       <button type="button" id="goToLogin" style="margin-left: 8px;" (click)="islogin=true">Back to login</button>
+                    </div> 
+                    
+                  </div>
+            </div>
+
+        </div>
+    </div>
+</div>
