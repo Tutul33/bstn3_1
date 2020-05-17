@@ -1,14 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,ViewChild, ElementRef, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { PagerService } from '../shared/pagerservice';
 import {Router} from '@angular/router';
 import * as $ from 'jquery';
+//For debouncing add those--- start
+import { of } from "rxjs";
+import {
+  debounceTime,
+  map,
+  distinctUntilChanged,
+  filter
+} from "rxjs/operators";
+import { fromEvent } from 'rxjs';
+//End
 @Component({
   selector: 'app-feedbacks',
   templateUrl: './feedbacks.component.html',
   styleUrls: ['./feedbacks.component.css']
 })
 export class FeedbacksComponent implements OnInit {
+  //To searching with debouncing
+  @ViewChild('SearchInput', { static: true }) SearchInput: ElementRef;
+ 
   public _postListUrl: string = 'posts/getpostdata';
   public loggedUserId:number=0;
   public loggedUserName:string='';
@@ -20,16 +33,49 @@ export class FeedbacksComponent implements OnInit {
   public pagedItems: any = [];
   public pageStart: number = 0;
   public pageEnd: number = 0;
+  public isSerachng:boolean=false;
   constructor(private _dataService:DataService,public pagerService:PagerService,public _router:Router) { }
 
   ngOnInit(): void {
+
+    
+    
     var userID=localStorage.getItem('userId');    
     this.loggedUserId=parseInt(userID);
     this.loggedUserName=localStorage.getItem('username');
     if(this.loggedUserId<=0){
       this._router.navigate(['/login']);
     }
-    this.loadPostData(1,true,this.pageSize);
+
+    //To search with debouncing time
+    this.searchWithDebouncingTime();
+
+    if(!this.isSerachng)
+    this.loadPostData(1,true,this.pageSize); 
+
+  }
+  searchWithDebouncingTime(){
+    fromEvent(this.SearchInput.nativeElement, 'keyup').pipe(
+
+      // get value
+      map((event: any) => {
+        return event.target.value;
+      })
+      // if character length greater then 2
+      , filter(res => res.length > 2)
+
+      // Time in milliseconds between key events
+      , debounceTime(1000)
+
+      // If previous query is diffent from current   
+      , distinctUntilChanged()
+
+      // subscription for response
+    ).subscribe((text: string) => {     
+      this.isSerachng=true; 
+      this.search=text;
+      this.loadPostData(1,true,this.pageSize);
+    });
   }
   public listPost:any=[];
   public res:any;

@@ -8,7 +8,9 @@
                 <button type="button" style="float: left;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control" (click)="LogOut()"  >Log Out</button>
                 <button id="CreatePostBtn" *ngIf="!isPostCreate" (click)="GoToCreatePost()" class="col-md-2 form-control"  style="float: left;border-color: #5a90e0;color:#15f1f1">Create Post</button>
                 <label id="message" style="padding-left: 60px;float: left;border-color: hsla(36, 89%, 51%, 0.911);color:hsla(36, 89%, 51%, 0.911)" *ngIf="Message!==''?true:false" ><h2>{{Message}}</h2></label>
-                <input type="text" *ngIf="!isCreate" style="float: right;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control" placeholder="Search Post" [(ngModel)]="search" (keyup)="loadPostData(0,true,pageSize)"  >
+                <!-- <input type="text"  *ngIf="!isCreate" style="float: right;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control" placeholder="Search Post" [(ngModel)]="search" (keyup)="loadPostData(0,true,pageSize)"  > -->
+                <input type="text"  #SearchInput    style="float: right;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control"  placeholder="Type post name" />
+
                 <button type="button" *ngIf="isCreate" style="float: right;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control" (click)="isCreate=false;isCommentCreate=false;isPostCreate=false;">Back To List</button>
                 <label id="UserLogged" style="padding-left: 15px;color:crimson"  ><h2>{{loggedUserName==''?'':'Logged by'}} {{loggedUserName}}</h2></label>
                 
