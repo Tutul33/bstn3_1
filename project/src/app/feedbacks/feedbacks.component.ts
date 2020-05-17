@@ -23,7 +23,8 @@ export class FeedbacksComponent implements OnInit {
   @ViewChild('SearchInput', { static: true }) SearchInput: ElementRef;
 
   //Common Variable
-  public _postListUrl: string = 'posts/getpostdata';
+  //public _postListUrl: string = 'posts/getPostDataUsingSP'; //for ADO.NET and Store Procedure
+  public _postListUrl: string = 'posts/getPostDataUsingLinq'; // for entity framework core and LINQ
   public loggedUserId:number=0;
   public loggedUserName:string='';
   public textData:string='';
@@ -113,8 +114,12 @@ export class FeedbacksComponent implements OnInit {
                 if (this.res.resdata === null && this.res.resdata.listPost.length === 0) {
                    
                 } else if (this.res.resdata.listPost !== "") {
-                   
-                    this.listPost = JSON.parse(this.res.resdata.listPost);
+                    //Uncomment below code for ADO.NET and when result from Store procedure
+                    //this.listPost = JSON.parse(this.res.resdata.listPost);
+
+                    //Uncomment below code for Entity Framework Core and when result from linq
+                    this.listPost=this.res.resdata.listPost;
+
                     this.totalRows = this.listPost[0].recordsTotal;
                   //  this.totalRowsInList = this.listBillLedger.length;
                     if (this.pageNumber == 0 || this.pageNumber == 1) {
