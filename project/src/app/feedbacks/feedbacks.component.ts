@@ -37,9 +37,6 @@ export class FeedbacksComponent implements OnInit {
   constructor(private _dataService:DataService,public pagerService:PagerService,public _router:Router) { }
 
   ngOnInit(): void {
-
-    
-    
     var userID=localStorage.getItem('userId');    
     this.loggedUserId=parseInt(userID);
     this.loggedUserName=localStorage.getItem('username');
