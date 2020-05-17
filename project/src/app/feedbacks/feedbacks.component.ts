@@ -39,7 +39,7 @@ export class FeedbacksComponent implements OnInit {
   public isPostCreate:boolean=false;
   public isCreate:boolean=false;
   
-  //Like or Dislike section
+  //Like or Dislike variable
   public _setOpinionUrl:string='comment/setOpinion';
 
   //Pagination
