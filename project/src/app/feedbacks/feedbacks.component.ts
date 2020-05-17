@@ -28,11 +28,14 @@ export class FeedbacksComponent implements OnInit {
   public loggedUserName:string='';
   public textData:string='';
   public Message:string='';
+  public res:any;
+  public search:string='';
 
   //Comment Variable
   public _createCommentUrl:string='comment/createComment';
   public isCommentCreate:boolean=false;
   public postObject:any;
+  public listPost:any=[];
 
   //Post Variable
   public _createPostUrl:string='posts/createPost';
@@ -91,9 +94,7 @@ export class FeedbacksComponent implements OnInit {
       this.loadPostData(1,true,this.pageSize);
     });
   }
-  public listPost:any=[];
-  public res:any;
-  public search:string='';
+
   searchPost(){
     if(this.search.trim()!='')
         this.loadPostData(0,true,this.pageSize);
