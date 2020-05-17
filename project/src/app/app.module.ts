@@ -7,7 +7,8 @@ import { FeedbacksComponent } from './feedbacks/feedbacks.component';
 import { HttpClientModule } from '@angular/common/http'
 import { DataService } from './data.service';
 import {PagerService} from './shared/pagerservice';
-import { LoginComponent } from './login/login.component'
+import { LoginComponent } from './login/login.component';
+//import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import * as bootstrap from 'bootstrap';
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import * as bootstrap from 'bootstrap';
     AppRoutingModule,
     FormsModule ,
     HttpClientModule
+    //,AngularFontAwesomeModule
   ],
   providers: [HttpClientModule,DataService,PagerService],
   bootstrap: [AppComponent]

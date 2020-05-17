@@ -7,15 +7,18 @@
             <div class="col-md-12">
                 <button type="button" style="float: left;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control" (click)="LogOut()"  >Log Out</button>
                 <button id="CreatePostBtn" *ngIf="!isPostCreate" (click)="GoToCreatePost()" class="col-md-2 form-control"  style="float: left;border-color: #5a90e0;color:#15f1f1">Create Post</button>
-                <label id="message" style="padding-left: 60px;float: left;border-color: hsla(36, 89%, 51%, 0.911);color:hsla(36, 89%, 51%, 0.911)" *ngIf="Message!==''?true:false" ><h2>{{Message}}</h2></label>
                 <!-- <input type="text"  *ngIf="!isCreate" style="float: right;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control" placeholder="Search Post" [(ngModel)]="search" (keyup)="loadPostData(0,true,pageSize)"  > -->
+                
+                <button type="button" *ngIf="isCreate" style="float: right;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control" (click)="isCreate=false;isCommentCreate=false;isPostCreate=false;">Back To List</button>
+                <label id="UserLogged" style="padding-left: 15px;" class="text-info" ><h2>{{loggedUserName==''?'':'Logged by'}} {{loggedUserName}}</h2></label>
                 <input type="text"  #SearchInput    style="float: right;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control"  placeholder="Type post name" />
 
-                <button type="button" *ngIf="isCreate" style="float: right;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control" (click)="isCreate=false;isCommentCreate=false;isPostCreate=false;">Back To List</button>
-                <label id="UserLogged" style="padding-left: 15px;color:crimson"  ><h2>{{loggedUserName==''?'':'Logged by'}} {{loggedUserName}}</h2></label>
-                
               </div>
               <div class="clearfix"></div>
+              <div  class="col-md-12"  *ngIf="Message!==''?true:false">
+                <label id="message" style="padding-left: 60px;float: left;border-color: hsla(36, 89%, 51%, 0.911);color:hsla(36, 89%, 51%, 0.911)" *ngIf="Message!==''?true:false" ><h2>{{Message}}</h2></label>
+                
+              </div>
               <div class="col-md-12" *ngIf="!isCreate">
                 <table class="table table-xs " >
                     <tbody>
@@ -25,8 +28,8 @@
                                     <tbody style="padding:3px;">
                                         <tr style="background-color:#f6f6f6;">
                                             <th style="text-align:left;width:20%; padding-right:10px !important;color:#15f1f1">{{post.postText}}
-                                                <button id="like" style="float:right" type="button" (click)="GoToCreateComment(post)"> 
-                                                    Comment
+                                                <button id="like" style="float:right" class="btn btn-outline-info" role="button" (click)="GoToCreateComment(post)"> 
+                                                   New Comment
                                                 </button>
                                             </th>                                
                                             <th width="10%" style="color:#15f1f1" >{{post.userType}}</th>
@@ -53,10 +56,10 @@
                                             </td>
                                             <td style="text-align:left;width:10%; padding-right:10px !important" valign="bottom">
                                                <button id="like" type="button" (click)="setOpinion(item,true)"> 
-                                                   {{item.cLike}} Like
+                                                   {{item.cLike}} <i class="fa fa-thumbs-up text-success " aria-hidden="true"></i>
                                                </button>
-                                               <button id="disLike" type="button" (click)="setOpinion(item,false)"> 
-                                                   {{item.cDislike}} Dislike
+                                               <button id="disLike" type="button" style="margin-left: 10px;" (click)="setOpinion(item,false)"> 
+                                                   {{item.cDislike}}  <i class="fa fa-thumbs-down text-danger" aria-hidden="true"></i>
                                             </button>
                                             </td>
                 

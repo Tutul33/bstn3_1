@@ -23,8 +23,8 @@ export class FeedbacksComponent implements OnInit {
   @ViewChild('SearchInput', { static: true }) SearchInput: ElementRef;
 
   //Common Variable
-  //public _postListUrl: string = 'posts/getPostDataUsingSP'; //for ADO.NET and Store Procedure
-  public _postListUrl: string = 'posts/getPostDataUsingLinq'; // for entity framework core and LINQ
+  public _postListUrl: string = 'posts/getPostDataUsingSP'; //for ADO.NET and Store Procedure
+  //public _postListUrl: string = 'posts/getPostDataUsingLinq'; // for entity framework core and LINQ
   public loggedUserId:number=0;
   public loggedUserName:string='';
   public textData:string='';
@@ -104,7 +104,7 @@ export class FeedbacksComponent implements OnInit {
   loadPostData(pageIndex: number, isPaging: boolean, pageSize: number) {
     this.pageNumber = pageIndex;
 
-    var param = { pageNumber: pageIndex, pageSize: pageSize,search:this.search };
+    var param = { pageNumber: pageIndex, pageSize: pageSize,search:this.search,userID:this.loggedUserId };
     this._dataService.getAll(this._postListUrl,param)
         .subscribe(
             response => {
@@ -115,10 +115,10 @@ export class FeedbacksComponent implements OnInit {
                    
                 } else if (this.res.resdata.listPost !== "") {
                     //Uncomment below code for ADO.NET and when result from Store procedure
-                    //this.listPost = JSON.parse(this.res.resdata.listPost);
+                    this.listPost = JSON.parse(this.res.resdata.listPost);
 
                     //Uncomment below code for Entity Framework Core and when result from linq
-                    this.listPost=this.res.resdata.listPost;
+                    //this.listPost=this.res.resdata.listPost;
 
                     this.totalRows = this.listPost[0].recordsTotal;
                   //  this.totalRowsInList = this.listBillLedger.length;
@@ -161,6 +161,12 @@ setPaging(page: number, isPaging: boolean) {
 }
 //Like or disloke section
 setOpinion(model,opinion){
+  if(model.isLikedByLoggedUser===opinion){
+    var strOp=opinion?'You already like it.':'You already dislike it.';
+    this.Message=strOp+'Please select different sign.';
+    return;
+  }
+  this.Message='';
   var param = [{ opinion: opinion,id:model.commentId ,userId:this.loggedUserId}];
         
   this._dataService.post(this._setOpinionUrl, param)
