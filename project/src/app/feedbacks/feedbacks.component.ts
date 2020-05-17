@@ -3,7 +3,7 @@ import { DataService } from '../data.service';
 import { PagerService } from '../shared/pagerservice';
 import {Router} from '@angular/router';
 import * as $ from 'jquery';
-//For debouncing add those--- start
+//For debouncing search import start
 import { of } from "rxjs";
 import {
   debounceTime,
@@ -21,10 +21,27 @@ import { fromEvent } from 'rxjs';
 export class FeedbacksComponent implements OnInit {
   //To searching with debouncing
   @ViewChild('SearchInput', { static: true }) SearchInput: ElementRef;
- 
+
+  //Common Variable
   public _postListUrl: string = 'posts/getpostdata';
   public loggedUserId:number=0;
   public loggedUserName:string='';
+  public textData:string='';
+  public Message:string='';
+
+  //Comment Variable
+  public _createCommentUrl:string='comment/createComment';
+  public isCommentCreate:boolean=false;
+  public postObject:any;
+
+  //Post Variable
+  public _createPostUrl:string='posts/createPost';
+  public isPostCreate:boolean=false;
+  public isCreate:boolean=false;
+  
+  //Like or Dislike section
+  public _setOpinionUrl:string='comment/setOpinion';
+
   //Pagination
   public pageNumber: number = 0;
   public pageSize: number = 5;
@@ -136,7 +153,7 @@ setPaging(page: number, isPaging: boolean) {
         
     }
 }
-public _setOpinionUrl:string='comment/setOpinion';
+//Like or disloke section
 setOpinion(model,opinion){
   var param = [{ opinion: opinion,id:model.commentId ,userId:this.loggedUserId}];
         
@@ -154,15 +171,8 @@ setOpinion(model,opinion){
 
 }
 
-LogOut(){
-  localStorage.setItem('userId', '');
-  this._router.navigate(['/login']);
-}
-public _createPostUrl:string='posts/createPost';
-public isPostCreate:boolean=false;
-public isCreate:boolean=false;
-public textData:string='';
-public Message:string='';
+//Post Section 
+
 GoToCreatePost(){
   this.isPostCreate=true;
   this.isCreate=true;
@@ -190,9 +200,7 @@ createPost(){
                 console.log(error);
             });
 }
-public _createCommentUrl:string='comment/createComment';
-public isCommentCreate:boolean=false;
-public postObject:any;
+//Comment section
 GoToCreateComment(item){
   this.isCommentCreate=true;
   this.isCreate=true;
@@ -220,6 +228,11 @@ createComment(){
             }, error => {
                 console.log(error);
             });
+}
+//Logout Section
+LogOut(){
+  localStorage.setItem('userId', '');
+  this._router.navigate(['/login']);
 }
 
 }
